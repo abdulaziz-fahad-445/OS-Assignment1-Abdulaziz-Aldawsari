@@ -48,16 +48,19 @@ I cloned the repository and opened the project folder in VS Code.
 
 ---
 
-### Entry 2 - [Date and Time]
+### Entry 2 - [March 19, 2026 and 7:40 PM]
 **What I did**: 
-
+I incorporated a priorty-based feture into the process model and randomized its genration 
 **Details**: 
-
+- Modified the process class to include a priority field (integer 1-5)
+- The process constructor now accept the priority  value as a parameter
+- I used randomness, The main procedure uses nextInt(5)+1 to generate a   unique priority for each process
+- addProcessToQueue method now display the priority along with the process name
 **Challenges**: 
-
+Adding the priority field to the constructor generted issues in the main proedure until all process instantiations were update with the new input 
 **Solution**: 
-
-**Time spent**: 
+Improved the process constructor signature and made sure the main loop produces a random priority before generating the process object
+**Time spent**: 1 Hour
 
 ---
 
