@@ -64,16 +64,19 @@ Improved the process constructor signature and made sure the main loop produces 
 
 ---
 
-### Entry 3 - [Date and Time]
+### Entry 3 - [March 22, 2026 and 5:35 AM]
 **What I did**: 
-
+Added a static counter to track the total number of context transitions executed by the scheduler  
 **Details**: 
-
+- To keep track of the overall count I added a static integer context switch variable to the schedulersimulation class 
+- The incerment logic context++, is inserted within the main while loop, just before each therad starts 
+- I added a final output statement display the entire counter e.g. "Total context swiches: 36"
 **Challenges**: 
-
+- The goal is to use java threads to detemine the switch point in a Round Robin simulation 
+- I needed to make sure the counter didn’t incerment while the queue was empty or during internal process steps
 **Solution**: 
-
-**Time spent**: 
+Adding the counter after procsessQueue.poll() ensures the any change from "ready" to "running" is regarded as a context switch 
+**Time spent**: 40
 
 ---
 

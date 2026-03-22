@@ -148,6 +148,7 @@ class Process implements Runnable {
 }
 
 public class SchedulerSimulation {
+    static int Contextswitch=0;//counts the number of contextswitch
     public static void main(String[] args) {
         // ⚠️ IMPORTANT: Put your student ID here to seed the random number generator
         // This makes your output unique to you - DO NOT forget to change this!
@@ -243,6 +244,7 @@ public class SchedulerSimulation {
             System.out.println(Colors.BOLD + Colors.MAGENTA + "└" + "─".repeat(79) + Colors.RESET + "\n");
             
             // Start the thread, which will run the process for one time quantum
+            Contextswitch++;//incerment before beginning a new process
             currentThread.start();
             
             try {
@@ -272,6 +274,7 @@ public class SchedulerSimulation {
         }
         
         // End of the scheduler simulation
+        System.out.println("Total context switches: "+Contextswitch);
         System.out.println(Colors.BOLD + Colors.BRIGHT_GREEN + 
                           "╔════════════════════════════════════════════════════════════════════════════════╗" + 
                           Colors.RESET);
