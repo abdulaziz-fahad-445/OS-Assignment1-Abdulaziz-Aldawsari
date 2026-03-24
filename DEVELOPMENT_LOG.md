@@ -80,29 +80,32 @@ Adding the counter after procsessQueue.poll() ensures the any change from "ready
 
 ---
 
-### Entry 4 - [Date and Time]
+### Entry 4 - [March 24, 2026 and  1:00 AM]
 **What I did**: 
-
+I worked on tracking the processes and saving their info
 **Details**: 
-
+- I added Stime and Wtime in the process class, one for the creation time one for waiting time 
+- I used currentTimeMillis() in the contructor to get the time when each process is created 
+- Also I made an Arraylist<Process> to keep all processes from the start , so even after they finish I stil have their data
 **Challenges**: 
-
+The problem was the processQueue keeps changing , and once a process finishes it gets removed , so I couldn’t use it to print the final summary
 **Solution**: 
-
-**Time spent**: 
+So I just saved all processes in the Arraylist from the beginning , and used it later to print the summary
+**Time spent**: 1 Hour
 
 ---
 
-### Entry 5 - [Date and Time]
+### Entry 5 - [March 24, 2026 and  2:00 AM]
 **What I did**: 
-
+I finished the waiting time math made the final table
 **Details**: 
-
+- I used the formula (Current time -Creation time ) - Burst time to calculate the waiting time each process
+- At the end, I used an enhanced for-Loop  to go through the Arraylist and print the summary table > Name, Burst , Waiting time 
 **Challenges**: 
-
+The waiting time numbers were way off at first because I forgot to subtract the burst time from the total time , so the numbers didn't make sense
 **Solution**: 
-
-**Time spent**: 
+I fixed the formula and ran the code again until the result in the terminal looked correct and logical
+**Time spent**: 1:15 Hour
 
 ---
 
@@ -121,10 +124,13 @@ Adding the counter after procsessQueue.poll() ensures the any change from "ready
 
 ## Summary
 
-**Total time spent on assignment**: [X hours]
+**Total time spent on assignment**: [6:10 hours]
 
 **Most challenging part**: 
-
+The messiest part was the terminal output. At first the program kept printing the same process names every time they run , so the output was full of repeated lines and hard to read. I couldn’t use it to make a final table. After that I used an Arraylist > I named Abdulaziz to store all processes  once from the beginning, so I can just print them at the end in a clean way
 **Most interesting learning**: 
-
+I liked how the context switching counter works. Every time the cpu moves from one process to another, The counter increments, so i could see how often switching happens, Also using System.currentTimeMillis() helped me calculate real waiting time instead of random numbers 
 **What I would do differently next time**: 
+I wasted time trying to fix the printing inside the loop.
+The better ieda was to store the data and print it later.
+Next time I will plan this form the beginning

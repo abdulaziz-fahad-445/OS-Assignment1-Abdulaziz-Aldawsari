@@ -1,9 +1,10 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
-
 // ANSI Color Codes for enhanced terminal output
 class Colors {
     public static final String RESET = "\u001B[0m";
@@ -30,6 +31,8 @@ class Process implements Runnable {
     private int timeQuantum; // Time slice (time quantum) allowed per CPU access (in milliseconds)
     private int remainingTime; // Time left for the process to finish its execution
     private int priority; //Process priority 1-5 with 5 being the highest private int priority
+     long Stime;//To stroe the creation time > Arrival time 
+     long Wtime;//Save the calculated waiting time
     // Constructor to initialize the process with name, burst time, and time quantum
     public Process(String name, int burstTime, int timeQuantum,int priority) {
         this.name = name;
@@ -37,6 +40,7 @@ class Process implements Runnable {
         this.timeQuantum = timeQuantum;
         this.remainingTime = burstTime; // Initially, remaining time is equal to the burst time
         this.priority = priority;//I added a priority variable to give each process consideration based on importance from 1 least to 5 highest
+        this.Stime=System.currentTimeMillis();//Use system to capture the exact creation time.currentTimeMillis() I used a long variable instead of int because the function was giving an error line 34,35
     }
 
     // This method will be called when the thread for this process is started
@@ -156,7 +160,7 @@ public class SchedulerSimulation {
         
         Random random = new Random(studentID);
 
-        
+        List<Process> Abdulaziz = new ArrayList();//ArrayList is used as a persistent repository to keep unique process references,The final summary table only displays each process after the execution queue (processQueue) is empty.
         // Define the time quantum in milliseconds (the maximum time a process gets in one round)
         // Choose a random number between 2000 and 5000 ms with a step of 1000 ms
         int timeQuantum = 2000 + random.nextInt(4) * 1000; // Random: 2000, 3000, 4000, or 5000
@@ -205,7 +209,7 @@ public class SchedulerSimulation {
             // Create a new process object with a unique name, burst time, and the defined time quantum
             int priority=1+random.nextInt(5); //priority between 1 and 5
             Process process = new Process("P" + i, burstTime, timeQuantum, priority);
-            
+            Abdulaziz.add(process);//Adding each process to the list for record keeping
             // Add the process to the ready queue and the map
             addProcessToQueue(process, processQueue, processMap);
         }
@@ -269,10 +273,20 @@ public class SchedulerSimulation {
                                       Colors.RESET + Colors.YELLOW + " is the last process → running to completion" + 
                                       Colors.RESET);
                     process.runToCompletion(); // Run until the process completes
+                    process.Wtime=(System.currentTimeMillis()-process.Stime)-process.getBurstTime();//Calculate wait time once the final remaining process runs to completion
                 }
             }
+                else {
+                    process.Wtime=(System.currentTimeMillis()-process.Stime)-process.getBurstTime();//Calculate the waiting time once the procedure complete its normal execution
+                }
+            
         }
+        //Display a summary table 
+        System.out.println("Process\tBurst\tWaiting");
+        for(Process Az: Abdulaziz){
+            System.out.println(Az.getName()+"\t"+Az.getBurstTime()+" ms"+"\t"+Az.Wtime +" ms");
         
+    }
         // End of the scheduler simulation
         System.out.println("Total context switches: "+Contextswitch);
         System.out.println(Colors.BOLD + Colors.BRIGHT_GREEN + 
@@ -301,7 +315,7 @@ public class SchedulerSimulation {
         
         // Print a message indicating the process has entered the ready queue
         System.out.println(Colors.BLUE + "  ➕ " + Colors.BOLD + Colors.CYAN + process.getName() + 
-                          Colors.RESET + Colors.BLUE + " (Priority: "+ process.getPriority() + ") "+ "enters the ready queue" + Colors.RESET + 
+                          Colors.RESET + Colors.BLUE + " Priority: "+ process.getPriority() + " "+ "enters the ready queue" + Colors.RESET + 
                           " │ Burst time: " + Colors.YELLOW + process.getBurstTime() + "ms" + 
                           Colors.RESET);
     }
