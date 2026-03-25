@@ -49,15 +49,15 @@ Example from my output:
 
 [In my simulation, P1 moves through several states during its lifecycle. Even though it finished its work very quickly in my specific run, we can still trace every stage it went through]
 
-1. **New**: [P1 is in the new state the moment it's created using the > new process() constructor in the code. At this point, the program has assigned it a burst time 2593ms, but the thread hasn't actually started running yet]
+1. **New**: [P1 is in the New state the moment the new Process() constructor is called in my code. At this point, the process object is initialized with its burst time of 2593ms, but its thread hasn't been started yet]
 
-2. **Runnable**: [Once the process is added to the processqueue, it becomes Runnable. In my output, you can see it was sitting at the front of the ready queue box, which means it was alive and ready to works, just waiting for scheduler to give it the CPU]
+2. **Runnable**: [Once the scheduler executes Thread.start(), P1 moves to the Runnable state. You can see it in my output sitting in the Ready Queue box, meaning it is alive and waiting for its turn to use the CPU]
 
-3. **Running**: [This state happens when the scheduler picks P1 and calls is run() method. My terminal shows this clearly with the message - P1 executing quantum [2593ms], Where the thread is actively using the cpu to complete its task]
+3. **Running**: [P1 enters the Running state when the scheduler picks it and its run() method begins executing. My terminal shows this with the message P1 executing quantum, where the thread might also use Thread.sleep() to simulate the time passing during execution]
 
-4. **Waiting**: [Noramlly , a process enters a waiting or ready state if it's interrupted by a context switch finishing. Since P1 finished in its very first turn, it didn't have to wait after starting, but it technically-watied-in the queue ealier while the system was starting up]
+4. **Waiting**: [If a process is interrupted by a context switch, it returns to the queue. In my code, the main scheduler thread uses Thread.join() to wait for P1 to finish its current quantum before moving to the next process, effectively managing the waiting transitions]
 
-5. **Terminated**: [This is the final state where the thread's work is done.Because P1's burst time less than the quantum , its remaining time hit 0ms immediately, and the program printed ? P1 finished execution, neaning the thread has officially exited the system]
+5. **Terminated**: [This is the final state once the process finishes its work. Since P1’s burst time was less than the quantum, its remaining time hit 0ms and the program printed ? P1 finished execution, meaning the thread has officially exited the system]
 
 ---
 
